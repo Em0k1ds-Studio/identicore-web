@@ -1,0 +1,152 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "identicore-api"
+dynamic = ["version"]
+description = 'Identicore API'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "quyxishi", email = "78678868+quyxishi@users.noreply.github.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "uvicorn[standart]~=0.34.2",
+  "fastapi[standart]~=0.115.12",
+  "python-multipart~=0.0.20",
+  "websockets~=15.0.1",
+  "ormsgpack~=1.9.1",
+  "identicore @ git+https://github.com/Em0k1ds-Studio/identicore.git",
+  "loguru"
+]
+
+[project.urls]
+Documentation = "https://github.com/Em0k1ds-Studio/identicore#readme"
+Issues = "https://github.com/Em0k1ds-Studio/identicore/issues"
+Source = "https://github.com/Em0k1ds-Studio/identicore"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.version]
+path = "src/__version__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+    "mypy",
+    "pyright",
+    "ruff",
+]
+
+[tool.hatch.envs.types.scripts]
+check = [
+    "mypy --install-types --non-interactive {args:src}",
+    "pyright {args:src}",
+]
+format = [
+    "ruff check --exit-zero --fix src tests",
+    "ruff format src tests",
+]
+
+[[tool.mypy.overrides]]
+module = ["inspireface.*"]
+follow_untyped_imports = true
+
+[tool.hatch.envs.test]
+dependencies = [
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.hatch.envs.test.scripts]
+check = "pytest {args:tests}"
+check-cov = "pytest --cov=src --cov-report=term-missing {args:tests}"
+
+[tool.hatch.envs.dev]
+extra-dependencies = [
+    "mypy",
+    "pyright",
+    "ruff",
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.hatch.envs.dev.scripts]
+full = [
+    "mypy --install-types --non-interactive {args:src}",
+    "pyright {args:src tests}",
+    "ruff check --exit-zero --fix src tests",
+    "ruff format src tests",
+    "pytest --cov=src --cov-report=term-missing {args:tests}",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    'F',      # Pyflakes
+    'E',      # pycodestyle (Error)
+    'I',      # isort
+    'D',      # pydocstyle
+    'UP',     # pyupgrade
+    'YTT',    # flake8-2020
+    'B',      # flake8-bugbear
+    'T10',    # flake8-debugger
+    'T20',    # flake8-print
+    'C4',     # flake8-comprehensions
+    'PYI006', # flake8-pyi
+    'PYI062', # flake8-pyi
+    'PYI063', # flake8-pyi
+    'PYI066', # flake8-pyi
+]
+flake8-quotes = { inline-quotes = 'single', multiline-quotes = 'double' }
+isort = { known-first-party = ['src', 'tests'] }
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+[tool.ruff.lint.per-file-ignores]
+"src/__version__.py" = ['D']
+"src/exceptions.py" = ['D']
+"*/__init__.py" = ['D']
+"tests/*" = ['D']
+
+[tool.ruff.format]
+quote-style = 'single'
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source_pkgs = ["src", "tests"]
+branch = true
+parallel = true
+omit = [
+    "src/__version__.py",
+]
+
+[tool.coverage.paths]
+src = ["src", "*/src/main"]
+tests = ["tests", "*/src/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

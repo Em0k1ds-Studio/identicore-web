@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+@import 'highlight.js/styles/codepen-embed.css';
+
+@font-face {
+  font-family: copernicus;
+  src: url(/_immutable/media/copernicus-400.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: copernicus;
+  src: url(/_immutable/media/copernicus-400-italic.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: copernicus;
+  src: url(/_immutable/media/copernicus-500.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: copernicus;
+  src: url(/_immutable/media/copernicus-500-italic.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: styreneb;
+  src: url(/_immutable/media/styreneB-400.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: styreneb;
+  src: url(/_immutable/media/styreneB-400-italic.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: tiempos;
+  src: url(/_immutable/media/tiempos-400.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: tiempos;
+  src: url(/_immutable/media/tiempos-400-italic.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: sfmono;
+  src: url(/_immutable/media/sfmono-400.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: sfmono;
+  src: url(/_immutable/media/sfmono-500.woff2) format('woff2');
+  font-display: swap;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.font-copernicus {
+  font-family: 'copernicus', ui-serif, Georgia, Cambria, 'Times New Roman',
+    Times, serif;
+  font-feature-settings: 'ss01' 0;
+}
+
+.font-styrene {
+  font-family: 'styreneb', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.font-tiempos {
+  font-family: 'tiempos', ui-serif, Georgia, Cambria, 'Times New Roman', Times,
+    serif;
+}
+
+.font-sfmono {
+  font-family: 'sfmono', monospace, 'Courier New', Courier, consolas;
+}
+
+[data-theme='identicore'][data-mode='dark'] {
+  --bg-000: #1f1e1d;
+  --bg-100: #262624;
+  --bg-200: #30302e;
+  --bg-300: #3a3a38;
+  --text-000: #9c9a92;
+  --text-100: #b3b1a8;
+  --text-200: #c2c0b6;
+  --text-300: #c3c1b7;
+  --text-400: #d2d1cd;
+  --text-500: #faf9f5;
+  --text-600: #30302e;
+  --border-000: 1px dashed rgba(101, 100, 95, 0.4);
+  --border-300: 0.5px solid #4f4d4a;
+  --shadow-000: 0px 4px 4px rgba(0, 0, 0, 0.04);
+  --shadow-100: 0px 0px 40px 5px rgba(0, 0, 0, 0.3);
+  --shadow-200: 0px 0px 40px 1px rgba(0, 0, 0, 0.3);
+}
+
+.ic-bg-text-500 {
+  background-color: var(--text-500);
+}
+
+.ic-bg-000 {
+  background-color: var(--bg-000);
+}
+
+.ic-bg-100 {
+  background-color: var(--bg-100);
+}
+
+.ic-bg-200 {
+  background-color: var(--bg-200);
+}
+
+.ic-bg-300 {
+  background-color: var(--bg-300);
+}
+
+.ic-text-000 {
+  color: var(--text-000);
+}
+
+.ic-text-100 {
+  color: var(--text-100);
+}
+
+.ic-text-200 {
+  color: var(--text-200);
+}
+
+.ic-text-300 {
+  color: var(--text-300);
+}
+
+.ic-text-400 {
+  color: var(--text-400);
+}
+
+.ic-text-500 {
+  color: var(--text-500);
+}
+
+.ic-text-600 {
+  color: var(--text-600);
+}
+
+.ic-border-000 {
+  border: var(--border-000);
+}
+
+.ic-border-100 {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%2365645FB3' stroke-width='5' stroke-dasharray='10%2c 20' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.ic-border-200,
+.ic-border-100:hover {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%237C7B76B3' stroke-width='5' stroke-dasharray='10%2c 20' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.ic-border-300 {
+  border: var(--border-300);
+}
+
+.ic-shadow-000 {
+  box-shadow: var(--shadow-000);
+}
+
+.ic-shadow-100 {
+  box-shadow: var(--shadow-100);
+}
+
+.ic-shadow-200 {
+  box-shadow: var(--shadow-200);
+}
+
+.ic-hover-rc-100:hover * {
+  color: var(--text-100);
+}
+
+.ic-hover-400:hover {
+  color: var(--text-400);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #262624;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}

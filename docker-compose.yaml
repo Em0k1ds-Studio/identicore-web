@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    image: identicore/web
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: identicore/api
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
