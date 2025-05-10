@@ -30,6 +30,8 @@ sudo docker run --rm -d -p 8000:8000 identicore/api
 * #### Build
 ```shell
 cd ./api
+python3 -m venv .venv
+source ./.venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
