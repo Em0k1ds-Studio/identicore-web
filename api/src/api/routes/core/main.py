@@ -192,7 +192,7 @@ async def websocket_endpoint(ws: WebSocket) -> None:
         logger.info(f'websocket_endpoint: accepted `{ws.client}`')
 
         while rx := await ws.receive_bytes():
-            await asyncio.sleep(delay=2)  # TODO! remove mimic delay
+            await asyncio.sleep(delay=0.5)  # TODO! remove mimic delay (for demo purposes)
 
             logger.trace(f'[IN] websocket_endpoint: recv {len(rx)} bytes')
 
