@@ -7,7 +7,7 @@ name = "identicore-api"
 dynamic = ["version"]
 description = 'Identicore API'
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = "MIT"
 keywords = []
 authors = [
@@ -16,8 +16,6 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -58,8 +56,8 @@ check = [
     "pyright {args:src}",
 ]
 format = [
-    "ruff check --exit-zero --fix src tests",
-    "ruff format src tests",
+    "ruff check --exit-zero --fix src",
+    "ruff format src",
 ]
 
 [[tool.mypy.overrides]]
@@ -88,11 +86,14 @@ extra-dependencies = [
 [tool.hatch.envs.dev.scripts]
 full = [
     "mypy --install-types --non-interactive {args:src}",
-    "pyright {args:src tests}",
-    "ruff check --exit-zero --fix src tests",
-    "ruff format src tests",
+    "pyright {args:src}",
+    "ruff check --exit-zero --fix src",
+    "ruff format src",
     "pytest --cov=src --cov-report=term-missing {args:tests}",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
 
 [tool.ruff]
 line-length = 120

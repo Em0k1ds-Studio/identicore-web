@@ -44,7 +44,7 @@ identicore_session = identicore.IdenticoreSession(
 
 
 def middleware(
-    entry: QueueEntry,
+    entry: QueueInner,
 ) -> Union[ErrorModel, VerificationResponse, IdentificationResponse]:
     """Middleware between AI and `queue_thread`."""
 
@@ -63,7 +63,10 @@ def middleware(
 
     try:
         first_faces: List[FaceInformation] = identicore_session.face_detection(
-            image=first_image, for_identification=params[0], threshold=params[1]
+            image=first_image,
+            draw_opts=identicore.DefaultDrawingOpts,
+            for_identification=params[0],
+            threshold=params[1],
         )
     except identicore.MultipleFacesDetected as e:
         return ErrorModel(
@@ -73,18 +76,21 @@ def middleware(
     if entry.second_image:
         if not len(first_faces):
             return ErrorModel(detail='No faces were found on first image')
-        
+
         second_image: MatLike = bytes2cvimg(entry.second_image)
 
         try:
             second_faces: List[FaceInformation] = identicore_session.face_detection(
-                image=second_image, for_identification=params[0], threshold=params[1]
+                image=second_image,
+                draw_opts=identicore.DefaultDrawingOpts,
+                for_identification=params[0],
+                threshold=params[1],
             )
         except identicore.MultipleFacesDetected as e:
             return ErrorModel(
                 detail=f'Unable to compare faces due multiple faces detected on second image: {e.quantity}'
             )
-        
+
         if not len(second_faces):
             return ErrorModel(detail='No faces were found on second image')
 
@@ -143,9 +149,12 @@ def queue_thread() -> NoReturn:
     while True:
         try:
             entry: QueueEntry = queue.popleft()
+        except IndexError:
+            continue
 
-            logger.trace(f'queue_thread: recv `{entry.inner.uid}`')
+        logger.trace(f'queue_thread: recv `{entry.inner.uid}`')
 
+        try:
             future: Future[
                 Union[ErrorModel, VerificationResponse, IdentificationResponse]
             ] = executor.submit(middleware, entry.inner)
@@ -157,8 +166,6 @@ def queue_thread() -> NoReturn:
             logger.info(f'queue_thread: submission `{submission!r}`')
 
             entry.callback(submission)
-        except IndexError:
-            pass
         except TimeoutError:
             logger.warning(f'queue_thread: timed out `{entry.inner.uid}`')
             entry.callback(ErrorModel(detail='Timed out'))
